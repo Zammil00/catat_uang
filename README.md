@@ -2,6 +2,12 @@
 
 A new Flutter project.
 
+Aplikasi Catat Uang Berbasis Andorid
+
+MASIH DALAM PENGEMBANGAN !
+
+Terima Kasih ❤️❤️❤️
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
