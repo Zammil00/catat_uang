@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -8,6 +9,42 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  bool isExpanse = true;
+
+  void openDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext contex) {
+          return AlertDialog(
+            content: SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+                      (isExpanse) ? "Tambah Pengeluaran" : "Tambah Pemasukan",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 18,
+                          color: (isExpanse) ? Colors.red : Colors.green),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(), hintText: "Name"),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(onPressed: () {}, child: Text("Tambah")),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,13 +56,21 @@ class _CategoryPageState extends State<CategoryPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Switch(
-                  value: true,
-                  onChanged: (value) => {},
-                  inactiveTrackColor: Colors.purple,
-                  inactiveThumbColor: Colors.deepPurple,
+                  value: isExpanse,
+                  onChanged: (bool value) {
+                    setState(() {
+                      isExpanse = value;
+                    });
+                  },
+                  inactiveTrackColor: Colors.greenAccent,
+                  inactiveThumbColor: Colors.green,
                   activeColor: Colors.red,
                 ),
-                IconButton(onPressed: () {}, icon: Icon(Icons.add))
+                IconButton(
+                    onPressed: () {
+                      openDialog();
+                    },
+                    icon: Icon(Icons.add))
               ],
             ),
           ),
@@ -34,10 +79,15 @@ class _CategoryPageState extends State<CategoryPage> {
             child: Card(
               elevation: 10,
               child: ListTile(
-                leading: Icon(
-                  Icons.upload,
-                  color: Colors.red,
-                ),
+                leading: (isExpanse)
+                    ? Icon(
+                        Icons.upload,
+                        color: Colors.red,
+                      )
+                    : Icon(
+                        Icons.download,
+                        color: Colors.green,
+                      ),
                 title: Text("Sedekah"),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -54,10 +104,15 @@ class _CategoryPageState extends State<CategoryPage> {
             child: Card(
               elevation: 10,
               child: ListTile(
-                leading: Icon(
-                  Icons.upload,
-                  color: Colors.red,
-                ),
+                leading: (isExpanse)
+                    ? Icon(
+                        Icons.upload,
+                        color: Colors.red,
+                      )
+                    : Icon(
+                        Icons.download,
+                        color: Colors.green,
+                      ),
                 title: Text("Sedekah"),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -74,10 +129,15 @@ class _CategoryPageState extends State<CategoryPage> {
             child: Card(
               elevation: 10,
               child: ListTile(
-                leading: Icon(
-                  Icons.upload,
-                  color: Colors.red,
-                ),
+                leading: (isExpanse)
+                    ? Icon(
+                        Icons.upload,
+                        color: Colors.red,
+                      )
+                    : Icon(
+                        Icons.download,
+                        color: Colors.green,
+                      ),
                 title: Text("Sedekah"),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -94,10 +154,15 @@ class _CategoryPageState extends State<CategoryPage> {
             child: Card(
               elevation: 10,
               child: ListTile(
-                leading: Icon(
-                  Icons.upload,
-                  color: Colors.red,
-                ),
+                leading: (isExpanse)
+                    ? Icon(
+                        Icons.upload,
+                        color: Colors.red,
+                      )
+                    : Icon(
+                        Icons.download,
+                        color: Colors.green,
+                      ),
                 title: Text("Sedekah"),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
