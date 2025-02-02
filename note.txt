@@ -1,6 +1,14 @@
-page yang ada 
+* PAGE YANG ADA 
 
 1. MAIN PAGE
     - Home Page
     - Category page
+
+
+
+
+* LIBRARY YG DI PAKE 
+    - Google Font
+    - Calender AppBar
+    
 
