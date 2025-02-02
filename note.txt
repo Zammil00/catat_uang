@@ -1,0 +1,6 @@
+page yang ada 
+
+1. MAIN PAGE
+    - Home Page
+    - Category page
+
