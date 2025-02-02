@@ -14,6 +14,12 @@ class _TransactionPageState extends State<TransactionPage> {
       appBar: AppBar(
         title: Text("Tambah Transaksi"),
       ),
+      body: SingleChildScrollView(
+        child: SafeArea(
+            child: Column(
+          children: [],
+        )),
+      ),
     );
   }
 }
