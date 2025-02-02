@@ -1,3 +1,4 @@
+import 'package:catat_uang/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_appbar/calendar_appbar.dart';
 
@@ -15,6 +16,7 @@ class _MainPageState extends State<MainPage> {
       appBar: CalendarAppBar(
         backButton: false,
         accent: Colors.deepPurple,
+        locale: 'id',
         onDateChanged: (value) => print(value),
         firstDate: DateTime.now().subtract(Duration(days: 140)),
         lastDate: DateTime.now(),
@@ -28,6 +30,7 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: HomePage(),
       bottomNavigationBar: BottomAppBar(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
