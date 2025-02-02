@@ -37,14 +37,20 @@ class _MainPageState extends State<MainPage> {
           children: [
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.home),
+              icon: Icon(
+                Icons.home,
+                color: Colors.purple,
+              ),
             ),
             SizedBox(
               width: 30,
             ),
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.list),
+              icon: Icon(
+                Icons.list,
+                color: Colors.purple,
+              ),
             ),
           ],
         ),
