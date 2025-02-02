@@ -14,7 +14,9 @@ class _HomePageState extends State<HomePage> {
     return SingleChildScrollView(
       child: SafeArea(
           child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // CONTAINER INCOME DAN EXPENSE
           Padding(
             padding: const EdgeInsets.all(16),
             child: Container(
@@ -106,7 +108,79 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-          )
+          ),
+
+          // TEXT TRANSAKSI
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              "TRANSAKSI",
+              style: GoogleFonts.montserrat(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+
+          // LIST TRANSAKSI
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Card(
+              elevation: 10,
+              child: ListTile(
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.delete),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(Icons.edit),
+                  ],
+                ),
+                title: Text("Rp. 20.000"),
+                subtitle: Text("Makan Siang"),
+                leading: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6)),
+                  child: Icon(
+                    Icons.upload,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Card(
+              elevation: 10,
+              child: ListTile(
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.delete),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(Icons.edit),
+                  ],
+                ),
+                title: Text("Rp. 20.000.000"),
+                subtitle: Text("Gaji Bulanan"),
+                leading: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6)),
+                  child: Icon(
+                    Icons.download,
+                    color: Colors.green,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       )),
     );
