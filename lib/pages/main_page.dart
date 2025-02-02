@@ -2,6 +2,7 @@ import 'package:catat_uang/pages/category_page.dart';
 import 'package:catat_uang/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_appbar/calendar_appbar.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -34,15 +35,25 @@ class _MainPageState extends State<MainPage> {
             )
           : PreferredSize(
               child: Container(
-                child: Text("KATEGORI"),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
+                  child: Text(
+                    "KATEGORI",
+                    style: GoogleFonts.montserrat(fontSize: 20),
+                  ),
+                ),
               ),
               preferredSize: Size.fromHeight(100)),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.deepPurple,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
+      floatingActionButton: Visibility(
+        visible: (currentIndex == 0) ? true : false,
+        child: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Colors.deepPurple,
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
