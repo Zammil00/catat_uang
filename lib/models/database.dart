@@ -1,27 +1,30 @@
+// models/database.dart
+import 'package:catat_uang/pages/transaction_page.dart';
 import 'package:drift/drift.dart';
-import 'dart:io';
+import 'package:sqlite3/sqlite3.dart' as sqlite;
 import 'package:drift/native.dart';
+import 'category.dart';
+import 'transaction.dart';
+import 'dart:io';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
-part '../models/database.g.dart';
+part 'database.g.dart';
 
-class TodoItems extends Table {
-  IntColumn get id => integer().autoIncrement()();
-  TextColumn get title => text().withLength(min: 6, max: 32)();
-  TextColumn get content => text().named('body')();
-  DateTimeColumn get createdAt => dateTime().nullable()();
-}
-
-@DriftDatabase(tables: [TodoItems])
+@DriftDatabase(
+  tables: [Categories, Transactions],
+)
 class AppDatabase extends _$AppDatabase {
-  // After generating code, this class needs to define a `schemaVersion` getter
-  // and a constructor telling drift where the database should be stored.
-  // These are described in the getting started guide: https://drift.simonbinder.eu/setup/
   AppDatabase() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
+}
 
-  static QueryExecutor _openConnection() {
-    return NativeDatabase.createInBackground(File('path/to/your/database'));
-  }
+LazyDatabase _openConnection() {
+  return LazyDatabase(() async {
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final file = File(p.join(dbFolder.path, 'app_database.sqlite'));
+    return NativeDatabase.createInBackground(file);
+  });
 }
