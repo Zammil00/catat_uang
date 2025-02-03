@@ -30,6 +30,7 @@
         - name
         - category_id
         - amount
+        - transaction_date
         - created_at
         - updated_at
         - deleted_at
