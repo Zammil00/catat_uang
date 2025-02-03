@@ -30,22 +30,21 @@ class _MainPageState extends State<MainPage> {
               backButton: false,
               accent: Colors.deepPurple,
               locale: 'id',
+              // ignore: avoid_print
               onDateChanged: (value) => print(value),
               firstDate: DateTime.now().subtract(Duration(days: 140)),
               lastDate: DateTime.now(),
             )
           : PreferredSize(
-              child: Container(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
-                  child: Text(
-                    "KATEGORI",
-                    style: GoogleFonts.montserrat(fontSize: 20),
-                  ),
+              preferredSize: Size.fromHeight(100),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
+                child: Text(
+                  "KATEGORI",
+                  style: GoogleFonts.montserrat(fontSize: 20),
                 ),
-              ),
-              preferredSize: Size.fromHeight(100)),
+              )),
       floatingActionButton: Visibility(
         visible: (currentIndex == 0) ? true : false,
         child: FloatingActionButton(
