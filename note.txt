@@ -11,5 +11,24 @@
     - Google Font
     - Calender AppBar
     - intl
+    - drift
+    - sqlite3
     
 
+* Tabel
+    1. categories
+        - id
+        - name
+        - type
+        - created_at
+        - updated_at
+        - deleted_at
+
+    2. transactions
+        - id
+        - name
+        - category_id
+        - amount
+        - created_at
+        - updated_at
+        - deleted_at
