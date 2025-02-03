@@ -50,8 +50,8 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Lottie.asset(
           'assets/animations/splash.json', // Ganti dengan path animasi Lottie kamu
-          width: 200,
-          height: 200,
+          width: 300,
+          height: 300,
           fit: BoxFit.contain,
         ),
       ),
