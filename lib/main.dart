@@ -13,7 +13,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MainPage(),
-      theme: ThemeData(primarySwatch: Colors.teal),
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: TextTheme(),
+      ),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.teal,
+        brightness: Brightness.dark,
+        // Sesuaikan warna lainnya untuk tema gelap
+      ),
     );
   }
 }

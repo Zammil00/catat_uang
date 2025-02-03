@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({super.key});
@@ -13,6 +14,8 @@ class _TransactionPageState extends State<TransactionPage> {
 
   List<String> list = ['MAKAN DAN JAJAN', 'BENSIN', 'KUOTA', 'LISTRIK'];
   late String dropDownValue = list.first;
+
+  TextEditingController dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +100,33 @@ class _TransactionPageState extends State<TransactionPage> {
             SizedBox(
               height: 25,
             ),
-            TextField(
-              decoration: InputDecoration(labelText: "Masukkan Tanggal"),
-              onTap: () {},
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: TextField(
+                readOnly: true,
+                controller: dateController,
+                decoration: InputDecoration(labelText: "Masukkan Tanggal"),
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2099));
+
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
+
+                    dateController.text = formattedDate;
+                  }
+                },
+              ),
             ),
+            SizedBox(
+              height: 25,
+            ),
+            Center(
+                child: ElevatedButton(onPressed: () {}, child: Text("Simpan")))
           ],
         )),
       ),
