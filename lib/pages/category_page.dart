@@ -1,4 +1,5 @@
 import 'package:catat_uang/models/database.dart';
+import 'package:drift/drift.dart' as drift;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/database.dart';
@@ -31,7 +32,14 @@ class _CategoryPageState extends State<CategoryPage> {
     return await database.getAllCategoryRepo(type);
   }
 
-  void openDialog() {
+  Future update(int categoryid, String newName) async {
+    return await database.updateCategoryRepo(categoryid, newName);
+  }
+
+  void openDialog(Category? category) {
+    if (category != null) {
+      categoryNameController.text = category.name;
+    }
     showDialog(
         context: context,
         builder: (BuildContext contex) {
@@ -59,13 +67,19 @@ class _CategoryPageState extends State<CategoryPage> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          insert(
-                              categoryNameController.text, isExpanse ? 2 : 1);
+                          if (category == null) {
+                            insert(
+                                categoryNameController.text, isExpanse ? 2 : 1);
+                          } else {
+                            update(category!.id, categoryNameController.text);
+                          }
+
                           Navigator.of(context, rootNavigator: true)
                               .pop('dialog');
                           setState(() {});
+                          categoryNameController.clear();
                         },
-                        child: Text("Tambah")),
+                        child: Text("Simpan")),
                   ],
                 ),
               ),
@@ -98,7 +112,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 ),
                 IconButton(
                     onPressed: () {
-                      openDialog();
+                      openDialog(null);
                     },
                     icon: Icon(Icons.add))
               ],
@@ -114,8 +128,47 @@ class _CategoryPageState extends State<CategoryPage> {
                 } else {
                   if (snapshot.hasData) {
                     if (snapshot.data!.length > 0) {
-                      return Text(
-                          'Ada Data : ' + snapshot.data!.length.toString());
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, Index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Card(
+                                elevation: 10,
+                                child: ListTile(
+                                  leading: (isExpanse)
+                                      ? Icon(
+                                          Icons.upload,
+                                          color: Colors.red,
+                                        )
+                                      : Icon(
+                                          Icons.download,
+                                          color: Colors.green,
+                                        ),
+                                  title: Text(snapshot.data![Index].name),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                          onPressed: () {
+                                            database.deleteCategoryRepo(
+                                                snapshot.data![Index].id);
+                                            setState(() {});
+                                          },
+                                          icon: Icon(Icons.delete)),
+                                      IconButton(
+                                          onPressed: () {
+                                            openDialog(snapshot.data![Index]);
+                                          },
+                                          icon: Icon(Icons.edit)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
                     } else {
                       return Center(
                         child: Text('Tidak Ada Data'),
@@ -128,31 +181,6 @@ class _CategoryPageState extends State<CategoryPage> {
                   }
                 }
               }),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Card(
-              elevation: 10,
-              child: ListTile(
-                leading: (isExpanse)
-                    ? Icon(
-                        Icons.upload,
-                        color: Colors.red,
-                      )
-                    : Icon(
-                        Icons.download,
-                        color: Colors.green,
-                      ),
-                title: Text("Sedekah"),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
-                  ],
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
