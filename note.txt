@@ -14,6 +14,9 @@
     - drift
     - sqlite3
     
+
+    PAKAI LIB NYA :
+    1. flutter pub run build_runner build (untuk running / migrate databasenya)
     
 
 * Tabel
