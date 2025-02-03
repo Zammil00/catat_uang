@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'dart:io';
 import 'package:drift/native.dart';
 
-part 'database.g.dart';
+part '../models/database.g.dart';
 
 class TodoItems extends Table {
   IntColumn get id => integer().autoIncrement()();
