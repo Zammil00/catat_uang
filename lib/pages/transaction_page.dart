@@ -125,8 +125,19 @@ class _TransactionPageState extends State<TransactionPage> {
             SizedBox(
               height: 25,
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    border: UnderlineInputBorder(), labelText: "Detail"),
+              ),
+            ),
+            SizedBox(
+              height: 25,
+            ),
             Center(
-                child: ElevatedButton(onPressed: () {}, child: Text("Simpan")))
+              child: ElevatedButton(onPressed: () {}, child: Text("Simpan")),
+            ),
           ],
         )),
       ),
