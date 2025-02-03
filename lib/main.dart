@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import './pages/main_page.dart';
 
 void main() {
@@ -12,16 +13,47 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: SplashScreen(),
       theme: ThemeData(
         primarySwatch: Colors.teal,
         scaffoldBackgroundColor: Colors.white,
-        textTheme: TextTheme(),
       ),
       darkTheme: ThemeData(
         primarySwatch: Colors.teal,
         brightness: Brightness.dark,
-        // Sesuaikan warna lainnya untuk tema gelap
+      ),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainPage()),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.deepPurple,
+      body: Center(
+        child: Lottie.asset(
+          'assets/animations/splash.json', // Ganti dengan path animasi Lottie kamu
+          width: 200,
+          height: 200,
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }
