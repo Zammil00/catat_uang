@@ -32,12 +32,7 @@ class _MainPageState extends State<MainPage> {
       }
 
       currentIndex = index;
-      _children = [
-        HomePage(
-          selectedDate: selectedDate,
-        ),
-        CategoryPage()
-      ];
+      _children = [HomePage(selectedDate: selectedDate), CategoryPage()];
     });
   }
 
