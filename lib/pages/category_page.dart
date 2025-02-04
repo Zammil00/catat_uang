@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, duplicate_import, non_constant_identifier_names, prefer_is_empty
+
 import 'package:catat_uang/models/database.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:flutter/material.dart';
@@ -25,6 +27,7 @@ class _CategoryPageState extends State<CategoryPage> {
     final Row = await database.into(database.categories).insertReturning(
         CategoriesCompanion.insert(
             name: name, type: type, createdAt: now, updatedAt: now));
+    // ignore: avoid_print
     print(Row);
   }
 
@@ -71,7 +74,7 @@ class _CategoryPageState extends State<CategoryPage> {
                             insert(
                                 categoryNameController.text, isExpanse ? 2 : 1);
                           } else {
-                            update(category!.id, categoryNameController.text);
+                            update(category.id, categoryNameController.text);
                           }
 
                           Navigator.of(context, rootNavigator: true)

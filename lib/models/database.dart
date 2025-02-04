@@ -1,4 +1,8 @@
 // models/database.dart
+// ignore: duplicate_ignore
+// ignore: unused_import
+// ignore_for_file: unused_import
+
 import 'package:catat_uang/pages/transaction_page.dart';
 import 'package:drift/drift.dart';
 import 'package:sqlite3/sqlite3.dart' as sqlite;
