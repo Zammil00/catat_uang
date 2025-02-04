@@ -3,6 +3,7 @@
 // ignore: unused_import
 // ignore_for_file: unused_import
 
+import 'package:catat_uang/models/transaction_with_category.dart';
 import 'package:catat_uang/pages/transaction_page.dart';
 import 'package:drift/drift.dart';
 import 'package:sqlite3/sqlite3.dart' as sqlite;
@@ -37,6 +38,19 @@ class AppDatabase extends _$AppDatabase {
 
   Future deleteCategoryRepo(int id) async {
     return (delete(categories)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
+  //Query TRANSACTION WITH CATEGORY
+  Stream<List<TransactionWithCategory>> getTransactionByDate(DateTime date) {
+    final query = select(transactions).join([
+      innerJoin(categories, categories.id.equalsExp(transactions.category_id))
+    ])
+      ..where(transactions.transaction_date.equals(date));
+
+    return query.watch().map((rows) => rows
+        .map((row) => TransactionWithCategory(
+            row.readTable(transactions), row.readTable(categories)))
+        .toList());
   }
 }
 
