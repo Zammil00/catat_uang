@@ -80,7 +80,14 @@ class _TransactionPageState extends State<TransactionPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text("Tambah Transaksi"),
+        title: Text(
+          "Tambah Transaksi",
+          style: GoogleFonts.montserrat(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: SafeArea(
@@ -90,7 +97,8 @@ class _TransactionPageState extends State<TransactionPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Row(
-                // mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Switch(
                     value: isExpanse,
@@ -110,7 +118,10 @@ class _TransactionPageState extends State<TransactionPage> {
                   ),
                   Text(
                     isExpanse ? "PENGELUARAN" : "PEMASUKAN",
-                    style: GoogleFonts.montserrat(fontSize: 14),
+                    style: GoogleFonts.montserrat(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -250,6 +261,15 @@ class _TransactionPageState extends State<TransactionPage> {
                     );
                     // Navigator.pop(context, true);
                   },
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(Colors.deepPurple),
+                    foregroundColor: WidgetStateProperty.all(Colors.white),
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
                   child: Text("Simpan")),
             ),
           ],
