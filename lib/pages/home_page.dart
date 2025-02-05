@@ -206,9 +206,10 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                               title: Text(
-                                  "Rp. ${snapshot.data![Index].transaction.amount}"),
+                                "Rp. ${NumberFormat('#,##0', 'id_ID').format(snapshot.data![Index].transaction.amount)}",
+                              ),
                               subtitle: Text(
-                                "${snapshot.data![Index].category.name} [ ${snapshot.data![Index].transaction.name} ]",
+                                "${snapshot.data![Index].category.name}  [${snapshot.data![Index].transaction.name}]",
                               ),
                               leading: Container(
                                 decoration: BoxDecoration(
