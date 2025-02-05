@@ -53,6 +53,16 @@ class AppDatabase extends _$AppDatabase {
             row.readTable(transactions), row.readTable(categories)))
         .toList());
   }
+
+  Future updateTransactionRepo(int id, int amount, int categoryId,
+      DateTime transactionDate, String nameDetail) async {
+    return (update(transactions)..where((tbl) => tbl.id.equals(id))).write(
+        TransactionsCompanion(
+            name: Value(nameDetail),
+            amount: Value(amount),
+            category_id: Value(categoryId),
+            transaction_date: Value(transactionDate)));
+  }
 }
 
 LazyDatabase _openConnection() {

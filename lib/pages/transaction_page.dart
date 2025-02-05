@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 class TransactionPage extends StatefulWidget {
   final TransactionWithCategory? transactionWithCategory;
+
   const TransactionPage({super.key, required this.transactionWithCategory});
 
   @override
@@ -44,6 +45,21 @@ class _TransactionPageState extends State<TransactionPage> {
 
   Future<List<Category>> getAllCategory(int type) async {
     return await database.getAllCategoryRepo(type);
+  }
+
+  Future update(int transactionId, int amount, int categorytransactionId,
+      DateTime transactionDate, String nameDetail) async {
+    return await database.updateTransactionRepo(transactionId, amount,
+        categorytransactionId, transactionDate, nameDetail);
+  }
+
+  Future<bool> saveEditedTransaction() async {
+    try {
+      await Future.delayed(Duration(seconds: 1));
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
@@ -220,14 +236,34 @@ class _TransactionPageState extends State<TransactionPage> {
             ),
             Center(
               child: ElevatedButton(
-                  onPressed: () {
-                    insert(
-                        int.parse(amountController.text),
-                        DateTime.parse(dateController.text),
-                        detailController.text,
-                        selectedCategory!.id);
+                  onPressed: () async {
+                    bool success = await saveEditedTransaction();
+                    (widget.transactionWithCategory == Null)
+                        ? insert(
+                            int.parse(amountController.text),
+                            DateTime.parse(dateController.text),
+                            detailController.text,
+                            selectedCategory!.id)
+                        : await update(
+                            widget.transactionWithCategory!.transaction.id,
+                            int.parse(amountController.text),
+                            selectedCategory!.id,
+                            DateTime.parse(dateController.text),
+                            detailController.text,
+                          );
 
-                    Navigator.pop(context, true);
+                    if (success) {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('menyimpan transaksi!')),
+                      );
+                      RefreshCallback;
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Gagal menyimpan transaksi!')),
+                      );
+                    }
+                    // Navigator.pop(context, true);
                   },
                   child: Text("Simpan")),
             ),
