@@ -1,11 +1,13 @@
 import 'package:catat_uang/models/category.dart';
 import 'package:catat_uang/models/database.dart';
+import 'package:catat_uang/models/transaction_with_category.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class TransactionPage extends StatefulWidget {
-  const TransactionPage({super.key});
+  final TransactionWithCategory? transactionWithCategory;
+  const TransactionPage({super.key, required this.transactionWithCategory});
 
   @override
   State<TransactionPage> createState() => _TransactionPageState();

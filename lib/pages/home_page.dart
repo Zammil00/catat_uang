@@ -1,5 +1,6 @@
 import 'package:catat_uang/models/database.dart';
 import 'package:catat_uang/models/transaction_with_category.dart';
+import 'package:catat_uang/pages/transaction_page.dart';
 // import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -153,7 +154,18 @@ class _HomePageState extends State<HomePage> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Icon(Icons.edit),
+                                  IconButton(
+                                    icon: Icon(Icons.edit),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => TransactionPage(
+                                          transactionWithCategory:
+                                              snapshot.data![Index],
+                                        ),
+                                      ));
+                                    },
+                                  ),
                                 ],
                               ),
                               title: Text(
