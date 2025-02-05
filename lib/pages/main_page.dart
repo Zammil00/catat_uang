@@ -62,7 +62,10 @@ class _MainPageState extends State<MainPage> {
                     const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
                 child: Text(
                   "KATEGORI",
-                  style: GoogleFonts.montserrat(fontSize: 20),
+                  style: GoogleFonts.montserrat(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               )),
       floatingActionButton: Visibility(

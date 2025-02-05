@@ -119,12 +119,21 @@ class _HomePageState extends State<HomePage> {
           // TEXT TRANSAKSI
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Text(
-              "TRANSAKSI",
-              style: GoogleFonts.montserrat(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "TRANSAKSI",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.refresh),
+                )
+              ],
             ),
           ),
 
@@ -155,11 +164,17 @@ class _HomePageState extends State<HomePage> {
                                     onPressed: () async {
                                       await database.deleteTransactionRepo(
                                           snapshot.data![Index].transaction.id);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content:
+                                              Text('data berhasil dihapus!'),
+                                          backgroundColor: Colors
+                                              .red, // Warna merah untuk error
+                                        ),
+                                      );
                                       setState(() {});
                                     },
-                                  ),
-                                  SizedBox(
-                                    width: 10,
                                   ),
                                   IconButton(
                                     icon: Icon(Icons.edit),

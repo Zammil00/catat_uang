@@ -47,59 +47,66 @@ class _CategoryPageState extends State<CategoryPage> {
         context: context,
         builder: (BuildContext contex) {
           return AlertDialog(
+            backgroundColor: Colors.white,
             content: SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  children: [
-                    Text(
-                      (isExpanse) ? "Tambah Pengeluaran" : "Tambah Pemasukan",
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: (isExpanse) ? Colors.red : Colors.green),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      controller: categoryNameController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: (isExpanse)
-                            ? "Masukan Pengeluaran"
-                            : "Masukan Pemasukan",
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        (isExpanse) ? "Tambah Pengeluaran" : "Tambah Pemasukan",
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: (isExpanse) ? Colors.red : Colors.green),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (category == null) {
-                          insert(
-                              categoryNameController.text, isExpanse ? 2 : 1);
-                        } else {
-                          update(category.id, categoryNameController.text);
-                        }
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: categoryNameController,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: (isExpanse)
+                                ? "Masukan Pengeluaran"
+                                : "Masukan Pemasukan",
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            )),
+                      ),
+                      SizedBox(
+                        height: 45,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (category == null) {
+                            insert(
+                                categoryNameController.text, isExpanse ? 2 : 1);
+                          } else {
+                            update(category.id, categoryNameController.text);
+                          }
 
-                        Navigator.of(context, rootNavigator: true)
-                            .pop('dialog');
-                        setState(() {});
-                        categoryNameController.clear();
-                      },
-                      child: Text("Simpan"),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all(Colors.deepPurple),
-                        foregroundColor: WidgetStateProperty.all(Colors.white),
-                        shape: WidgetStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                          Navigator.of(context, rootNavigator: true)
+                              .pop('dialog');
+                          setState(() {});
+                          categoryNameController.clear();
+                        },
+                        child: Text("Simpan"),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              WidgetStateProperty.all(Colors.deepPurple),
+                          foregroundColor:
+                              WidgetStateProperty.all(Colors.white),
+                          shape: WidgetStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -133,7 +140,8 @@ class _CategoryPageState extends State<CategoryPage> {
                       activeColor: Colors.red,
                     ),
                     const SizedBox(
-                        width: 8), // Beri jarak agar tidak terlalu dempet
+                      width: 15,
+                    ), // Beri jarak agar tidak terlalu dempet
                     Text(
                       isExpanse ? "PENGELUARAN" : "PEMASUKAN",
                       style: GoogleFonts.montserrat(

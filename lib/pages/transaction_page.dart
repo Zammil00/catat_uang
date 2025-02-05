@@ -239,6 +239,22 @@ class _TransactionPageState extends State<TransactionPage> {
             Center(
               child: ElevatedButton(
                   onPressed: () async {
+                    // Cek apakah ada data yang kosong sebelum menyimpan
+                    if (amountController.text.isEmpty ||
+                        dateController.text.isEmpty ||
+                        detailController.text.isEmpty ||
+                        selectedCategory == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              Text('Harap isi semua data sebelum menyimpan!'),
+                          backgroundColor:
+                              Colors.red, // Warna merah untuk error
+                        ),
+                      );
+                      return; // Hentikan eksekusi jika data tidak lengkap
+                    }
+
                     if (widget.transactionWithCategory != null) {
                       await update(
                         widget.transactionWithCategory!.transaction.id,
@@ -248,18 +264,26 @@ class _TransactionPageState extends State<TransactionPage> {
                         detailController.text,
                       );
                     } else {
-                      insert(
-                          int.parse(amountController.text),
-                          DateTime.parse(dateController.text),
-                          detailController.text,
-                          selectedCategory!.id);
+                      await insert(
+                        int.parse(amountController.text),
+                        DateTime.parse(dateController.text),
+                        detailController.text,
+                        selectedCategory!.id,
+                      );
                     }
+
                     setState(() {});
+
                     Navigator.pop(context, true);
+
+                    // Tampilkan notifikasi berhasil menyimpan
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('menyimpan transaksi!')),
+                      SnackBar(
+                        content: Text('Transaksi berhasil disimpan!'),
+                        backgroundColor:
+                            Colors.green, // Warna hijau untuk sukses
+                      ),
                     );
-                    // Navigator.pop(context, true);
                   },
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(Colors.deepPurple),
