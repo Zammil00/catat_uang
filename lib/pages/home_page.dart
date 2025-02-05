@@ -173,13 +173,13 @@ class _HomePageState extends State<HomePage> {
                               subtitle: Text(
                                   "${snapshot.data![Index].category.name} (${snapshot.data![Index].transaction.name})"),
                               leading: Container(
+                                child: (snapshot.data![Index].category.type ==
+                                        2)
+                                    ? Icon(Icons.upload, color: Colors.red)
+                                    : Icon(Icons.download, color: Colors.green),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(6)),
-                                child: Icon(
-                                  Icons.upload,
-                                  color: Colors.red,
-                                ),
                               ),
                             ),
                           ),

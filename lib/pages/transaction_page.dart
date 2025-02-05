@@ -48,8 +48,24 @@ class _TransactionPageState extends State<TransactionPage> {
 
   @override
   void initState() {
-    type = 2;
+    if (widget.transactionWithCategory != null) {
+      updateTransactionView(widget.transactionWithCategory!);
+    } else {
+      type = 2;
+    }
+
     super.initState();
+  }
+
+  void updateTransactionView(TransactionWithCategory transactionWithCategory) {
+    amountController.text =
+        transactionWithCategory.transaction.amount.toString();
+    detailController.text = transactionWithCategory.transaction.name;
+    dateController.text = DateFormat("yyy-MM-dd")
+        .format(transactionWithCategory.transaction.transaction_date);
+    type = transactionWithCategory.category.type;
+    (type == 2) ? isExpanse = true : isExpanse = false;
+    selectedCategory = transactionWithCategory.category;
   }
 
   @override
