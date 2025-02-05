@@ -1,9 +1,9 @@
 import 'package:catat_uang/models/database.dart';
 import 'package:catat_uang/models/transaction_with_category.dart';
 import 'package:catat_uang/pages/transaction_page.dart';
-// import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   final DateTime selectedDate;
@@ -15,149 +15,157 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AppDatabase database = AppDatabase();
+  double totalIncome = 0;
+  double totalExpense = 0;
 
   void _refreshTransactions() {
-    setState(() {});
+    _calculateTotals();
+  }
+
+  void _calculateTotals() async {
+    // Await the Future and then cast the result to double
+    int income = await database.getTotalIncomeByMonth(widget.selectedDate);
+    int expense = await database.getTotalExpenseByMonth(widget.selectedDate);
+
+    setState(() {
+      totalIncome = income.toDouble(); // Convert the integer to double
+      totalExpense = expense.toDouble(); // Convert the integer to double
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _calculateTotals();
   }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // CONTAINER INCOME DAN EXPENSE
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.purple,
-                borderRadius: BorderRadius.circular(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // CONTAINER INCOME DAN EXPENSE
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.purple,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(6)),
+                          child: Icon(
+                            Icons.download,
+                            color: Colors.green,
+                          ),
+                        ),
+                        SizedBox(width: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Income",
+                              style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "Rp. ${NumberFormat('#,##0', 'id_ID').format(totalIncome)}",
+                              style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(6)),
+                          child: Icon(
+                            Icons.upload,
+                            color: Colors.red,
+                          ),
+                        ),
+                        SizedBox(width: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Expense",
+                              style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "Rp. ${NumberFormat('#,##0', 'id_ID').format(totalExpense)}",
+                              style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
+            ),
+
+            // TEXT TRANSAKSI
+            Padding(
+              padding: const EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(6)),
-                        child: Icon(
-                          Icons.download,
-                          color: Colors.green,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Income",
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Rp. 3.800.000",
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  Text(
+                    "TRANSAKSI",
+                    style: GoogleFonts.montserrat(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(6)),
-                        child: Icon(
-                          Icons.upload,
-                          color: Colors.red,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Expanse",
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Rp. 3.800.000",
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+                  IconButton(
+                    onPressed: () {
+                      _refreshTransactions();
+                    },
+                    icon: Icon(Icons.refresh),
+                  )
                 ],
               ),
             ),
-          ),
 
-          // TEXT TRANSAKSI
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "TRANSAKSI",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    _refreshTransactions();
-                  },
-                  icon: Icon(Icons.refresh),
-                )
-              ],
-            ),
-          ),
-
-          StreamBuilder<List<TransactionWithCategory>>(
-            stream: database.getTransactionByDateRepo(widget.selectedDate),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                if (snapshot.hasData) {
-                  if (snapshot.data!.isNotEmpty) {
+            StreamBuilder<List<TransactionWithCategory>>(
+              stream: database.getTransactionByDateRepo(widget.selectedDate),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                     return ListView.builder(
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data!.length,
-                      // ignore: non_constant_identifier_names
                       itemBuilder: (context, Index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -172,17 +180,15 @@ class _HomePageState extends State<HomePage> {
                                     onPressed: () async {
                                       await database.deleteTransactionRepo(
                                           snapshot.data![Index].transaction.id);
-                                      // ignore: use_build_context_synchronously
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content:
-                                              Text('data berhasil dihapus!'),
-                                          backgroundColor: Colors
-                                              .red, // Warna merah untuk error
+                                              Text('Data berhasil dihapus!'),
+                                          backgroundColor: Colors.red,
                                         ),
                                       );
-                                      setState(() {});
+                                      _refreshTransactions();
                                     },
                                   ),
                                   IconButton(
@@ -225,20 +231,14 @@ class _HomePageState extends State<HomePage> {
                       },
                     );
                   } else {
-                    return Center(
-                      child: Text('Data Transaksi Kosong'),
-                    );
+                    return Center(child: Text('Data Transaksi Kosong'));
                   }
-                } else {
-                  return Center(
-                    child: Text('Tidak Ada Data'),
-                  );
                 }
-              }
-            },
-          ),
-        ],
-      )),
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -67,6 +67,42 @@ class AppDatabase extends _$AppDatabase {
   Future deleteTransactionRepo(int id) async {
     return (delete(transactions)..where((tbl) => tbl.id.equals(id))).go();
   }
+
+  Future<int> getTotalIncomeByMonth(DateTime date) async {
+    final startOfMonth = DateTime(date.year, date.month, 1);
+    final endOfMonth = DateTime(date.year, date.month + 1, 0);
+
+    final query = await (select(transactions).join([
+      innerJoin(categories, categories.id.equalsExp(transactions.category_id))
+    ])
+          ..where(categories.type.equals(1)) // Income
+          ..where(transactions.transaction_date
+              .isBetweenValues(startOfMonth, endOfMonth)))
+        .get();
+
+    // Ensure query is resolved before using fold
+    final totalIncome = await query.fold(
+        0, (sum, row) => sum + row.readTable(transactions).amount);
+    return totalIncome;
+  }
+
+  Future<int> getTotalExpenseByMonth(DateTime date) async {
+    final startOfMonth = DateTime(date.year, date.month, 1);
+    final endOfMonth = DateTime(date.year, date.month + 1, 0);
+
+    final query = await (select(transactions).join([
+      innerJoin(categories, categories.id.equalsExp(transactions.category_id))
+    ])
+          ..where(categories.type.equals(2)) // Expense
+          ..where(transactions.transaction_date
+              .isBetweenValues(startOfMonth, endOfMonth)))
+        .get();
+
+    // Ensure query is resolved before using fold
+    final totalExpense = await query.fold(
+        0, (sum, row) => sum + row.readTable(transactions).amount);
+    return totalExpense;
+  }
 }
 
 LazyDatabase _openConnection() {

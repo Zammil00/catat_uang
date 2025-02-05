@@ -44,74 +44,85 @@ class _CategoryPageState extends State<CategoryPage> {
       categoryNameController.text = category.name;
     }
     showDialog(
-        context: context,
-        builder: (BuildContext contex) {
-          return AlertDialog(
-            backgroundColor: Colors.white,
-            content: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        (isExpanse) ? "Tambah Pengeluaran" : "Tambah Pemasukan",
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: (isExpanse) ? Colors.red : Colors.green),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        controller: categoryNameController,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: (isExpanse)
-                                ? "Masukan Pengeluaran"
-                                : "Masukan Pemasukan",
-                            hintStyle: TextStyle(
-                              color: Colors.black,
-                            )),
-                      ),
-                      SizedBox(
-                        height: 45,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (category == null) {
-                            insert(
-                                categoryNameController.text, isExpanse ? 2 : 1);
-                          } else {
-                            update(category.id, categoryNameController.text);
-                          }
-
-                          Navigator.of(context, rootNavigator: true)
-                              .pop('dialog');
-                          setState(() {});
-                          categoryNameController.clear();
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              WidgetStateProperty.all(Colors.deepPurple),
-                          foregroundColor:
-                              WidgetStateProperty.all(Colors.white),
-                          shape: WidgetStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+      context: context,
+      builder: (BuildContext contex) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          content: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+                      (isExpanse) ? "Tambah Pengeluaran" : "Tambah Pemasukan",
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: (isExpanse) ? Colors.red : Colors.green),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: categoryNameController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: (isExpanse)
+                              ? "Masukan Pengeluaran"
+                              : "Masukan Pemasukan",
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                          )),
+                    ),
+                    SizedBox(
+                      height: 45,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (categoryNameController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                              (isExpanse)
+                                  ? "Harap Isi Katageri Pengeluaran"
+                                  : "Harap Isi Katageri Pemasukan",
                             ),
+                            backgroundColor: Colors.red,
+                          ));
+                          return; // Menghentikan eksekusi jika form kosong
+                        }
+                        if (category == null) {
+                          insert(
+                              categoryNameController.text, isExpanse ? 2 : 1);
+                        } else {
+                          update(category.id, categoryNameController.text);
+                        }
+
+                        Navigator.of(context, rootNavigator: true)
+                            .pop('dialog');
+                        setState(() {});
+                        categoryNameController.clear();
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            WidgetStateProperty.all(Colors.deepPurple),
+                        foregroundColor: WidgetStateProperty.all(Colors.white),
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: Text("Simpan"),
                       ),
-                    ],
-                  ),
+                      child: Text("Simpan"),
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   @override
