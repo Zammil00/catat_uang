@@ -1,4 +1,3 @@
-import 'package:catat_uang/models/category.dart';
 import 'package:catat_uang/models/database.dart';
 import 'package:catat_uang/models/transaction_with_category.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +39,8 @@ class _TransactionPageState extends State<TransactionPage> {
           createdAt: now,
           updatedAt: now,
         ));
-    print('APA INI: ' + row.toString());
+    // ignore: avoid_print
+    print('APA INI: $row');
   }
 
   Future<List<Category>> getAllCategory(int type) async {
@@ -159,10 +159,11 @@ class _TransactionPageState extends State<TransactionPage> {
                     );
                   } else {
                     if (snapshot.hasData) {
-                      if (snapshot.data!.length > 0) {
+                      if (snapshot.data!.isNotEmpty) {
                         selectedCategory = (selectedCategory == null)
                             ? snapshot.data!.first
                             : selectedCategory;
+                        // ignore: avoid_print
                         print(snapshot.toString());
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -274,9 +275,11 @@ class _TransactionPageState extends State<TransactionPage> {
 
                     setState(() {});
 
+                    // ignore: use_build_context_synchronously
                     Navigator.pop(context, true);
 
                     // Tampilkan notifikasi berhasil menyimpan
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Transaksi berhasil disimpan!'),

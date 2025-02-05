@@ -20,7 +20,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     updateView(0, DateTime.now());
     super.initState();
   }
@@ -47,7 +46,8 @@ class _MainPageState extends State<MainPage> {
               // ignore: avoid_print
               onDateChanged: (value) {
                 setState(() {
-                  print('SELECTED DATE : ' + value.toString());
+                  // ignore: avoid_print
+                  print('SELECTED DATE : $value');
                   selectedDate = value;
                   updateView(0, selectedDate);
                 });

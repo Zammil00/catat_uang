@@ -92,7 +92,6 @@ class _CategoryPageState extends State<CategoryPage> {
                           setState(() {});
                           categoryNameController.clear();
                         },
-                        child: Text("Simpan"),
                         style: ButtonStyle(
                           backgroundColor:
                               WidgetStateProperty.all(Colors.deepPurple),
@@ -104,6 +103,7 @@ class _CategoryPageState extends State<CategoryPage> {
                             ),
                           ),
                         ),
+                        child: Text("Simpan"),
                       ),
                     ],
                   ),

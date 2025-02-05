@@ -15,6 +15,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AppDatabase database = AppDatabase();
+
+  void _refreshTransactions() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -130,7 +135,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _refreshTransactions();
+                  },
                   icon: Icon(Icons.refresh),
                 )
               ],
@@ -146,10 +153,11 @@ class _HomePageState extends State<HomePage> {
                 );
               } else {
                 if (snapshot.hasData) {
-                  if (snapshot.data!.length > 0) {
+                  if (snapshot.data!.isNotEmpty) {
                     return ListView.builder(
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
+                      // ignore: non_constant_identifier_names
                       itemBuilder: (context, Index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -164,6 +172,7 @@ class _HomePageState extends State<HomePage> {
                                     onPressed: () async {
                                       await database.deleteTransactionRepo(
                                           snapshot.data![Index].transaction.id);
+                                      // ignore: use_build_context_synchronously
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
@@ -193,15 +202,22 @@ class _HomePageState extends State<HomePage> {
                               title: Text(
                                   "Rp. ${snapshot.data![Index].transaction.amount}"),
                               subtitle: Text(
-                                  "${snapshot.data![Index].category.name} (${snapshot.data![Index].transaction.name})"),
+                                "${snapshot.data![Index].category.name} [ ${snapshot.data![Index].transaction.name} ]",
+                              ),
                               leading: Container(
-                                child: (snapshot.data![Index].category.type ==
-                                        2)
-                                    ? Icon(Icons.upload, color: Colors.red)
-                                    : Icon(Icons.download, color: Colors.green),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(6)),
+                                child:
+                                    (snapshot.data![Index].category.type == 2)
+                                        ? Icon(
+                                            Icons.upload,
+                                            color: Colors.red,
+                                          )
+                                        : Icon(
+                                            Icons.download,
+                                            color: Colors.green,
+                                          ),
                               ),
                             ),
                           ),
