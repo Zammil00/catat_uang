@@ -53,15 +53,6 @@ class _TransactionPageState extends State<TransactionPage> {
         categorytransactionId, transactionDate, nameDetail);
   }
 
-  Future<bool> saveEditedTransaction() async {
-    try {
-      await Future.delayed(Duration(seconds: 1));
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
   @override
   void initState() {
     if (widget.transactionWithCategory != null) {
@@ -237,32 +228,26 @@ class _TransactionPageState extends State<TransactionPage> {
             Center(
               child: ElevatedButton(
                   onPressed: () async {
-                    bool success = await saveEditedTransaction();
-                    (widget.transactionWithCategory == Null)
-                        ? insert(
-                            int.parse(amountController.text),
-                            DateTime.parse(dateController.text),
-                            detailController.text,
-                            selectedCategory!.id)
-                        : await update(
-                            widget.transactionWithCategory!.transaction.id,
-                            int.parse(amountController.text),
-                            selectedCategory!.id,
-                            DateTime.parse(dateController.text),
-                            detailController.text,
-                          );
-
-                    if (success) {
-                      Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('menyimpan transaksi!')),
+                    if (widget.transactionWithCategory != null) {
+                      await update(
+                        widget.transactionWithCategory!.transaction.id,
+                        int.parse(amountController.text),
+                        selectedCategory!.id,
+                        DateTime.parse(dateController.text),
+                        detailController.text,
                       );
-                      RefreshCallback;
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Gagal menyimpan transaksi!')),
-                      );
+                      insert(
+                          int.parse(amountController.text),
+                          DateTime.parse(dateController.text),
+                          detailController.text,
+                          selectedCategory!.id);
                     }
+                    setState(() {});
+                    Navigator.pop(context, true);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('menyimpan transaksi!')),
+                    );
                     // Navigator.pop(context, true);
                   },
                   child: Text("Simpan")),
