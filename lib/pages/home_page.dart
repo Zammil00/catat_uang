@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                   Row(
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -150,7 +150,14 @@ class _HomePageState extends State<HomePage> {
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.delete),
+                                  IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () async {
+                                      await database.deleteTransactionRepo(
+                                          snapshot.data![Index].transaction.id);
+                                      setState(() {});
+                                    },
+                                  ),
                                   SizedBox(
                                     width: 10,
                                   ),

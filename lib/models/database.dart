@@ -63,6 +63,10 @@ class AppDatabase extends _$AppDatabase {
             category_id: Value(categoryId),
             transaction_date: Value(transactionDate)));
   }
+
+  Future deleteTransactionRepo(int id) async {
+    return (delete(transactions)..where((tbl) => tbl.id.equals(id))).go();
+  }
 }
 
 LazyDatabase _openConnection() {
