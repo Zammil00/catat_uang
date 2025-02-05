@@ -54,6 +54,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     Text(
                       (isExpanse) ? "Tambah Pengeluaran" : "Tambah Pemasukan",
                       style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.bold,
                           fontSize: 18,
                           color: (isExpanse) ? Colors.red : Colors.green),
                     ),
@@ -63,26 +64,41 @@ class _CategoryPageState extends State<CategoryPage> {
                     TextFormField(
                       controller: categoryNameController,
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(), hintText: "Name"),
+                        border: OutlineInputBorder(),
+                        hintText: (isExpanse)
+                            ? "Masukan Pengeluaran"
+                            : "Masukan Pemasukan",
+                      ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     ElevatedButton(
-                        onPressed: () {
-                          if (category == null) {
-                            insert(
-                                categoryNameController.text, isExpanse ? 2 : 1);
-                          } else {
-                            update(category.id, categoryNameController.text);
-                          }
+                      onPressed: () {
+                        if (category == null) {
+                          insert(
+                              categoryNameController.text, isExpanse ? 2 : 1);
+                        } else {
+                          update(category.id, categoryNameController.text);
+                        }
 
-                          Navigator.of(context, rootNavigator: true)
-                              .pop('dialog');
-                          setState(() {});
-                          categoryNameController.clear();
-                        },
-                        child: Text("Simpan")),
+                        Navigator.of(context, rootNavigator: true)
+                            .pop('dialog');
+                        setState(() {});
+                        categoryNameController.clear();
+                      },
+                      child: Text("Simpan"),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            WidgetStateProperty.all(Colors.deepPurple),
+                        foregroundColor: WidgetStateProperty.all(Colors.white),
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -100,24 +116,48 @@ class _CategoryPageState extends State<CategoryPage> {
             padding: const EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Switch(
-                  value: isExpanse,
-                  onChanged: (bool value) {
-                    setState(() {
-                      isExpanse = value;
-                      type = value ? 2 : 1;
-                    });
-                  },
-                  inactiveTrackColor: Colors.greenAccent,
-                  inactiveThumbColor: Colors.green,
-                  activeColor: Colors.red,
+                Row(
+                  children: [
+                    Switch(
+                      value: isExpanse,
+                      onChanged: (bool value) {
+                        setState(() {
+                          isExpanse = value;
+                          type = value ? 2 : 1;
+                        });
+                      },
+                      inactiveTrackColor: Colors.greenAccent,
+                      inactiveThumbColor: Colors.green,
+                      activeColor: Colors.red,
+                    ),
+                    const SizedBox(
+                        width: 8), // Beri jarak agar tidak terlalu dempet
+                    Text(
+                      isExpanse ? "PENGELUARAN" : "PEMASUKAN",
+                      style: GoogleFonts.montserrat(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
                 IconButton(
-                    onPressed: () {
-                      openDialog(null);
-                    },
-                    icon: Icon(Icons.add))
+                  onPressed: () {
+                    openDialog(null);
+                  },
+                  icon: const Icon(Icons.add),
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(Colors.deepPurple),
+                    foregroundColor: WidgetStateProperty.all(Colors.white),
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
