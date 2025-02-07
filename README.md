@@ -4,7 +4,9 @@ A new Flutter project.
 
 Aplikasi Catat Uang Berbasis Andorid
 
-MASIH DALAM PENGEMBANGAN !
+![Image](https://github.com/user-attachments/assets/733066e2-a311-4908-ba40-eee51b97d51e)
+
+Fitur Seperti Di Gambar
 
 Terima Kasih ❤️❤️❤️
 
